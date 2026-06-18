@@ -1,13 +1,13 @@
-import { InputProps } from "../../types";
+import type { InputProps } from "../../types";
 import styles from "./Input.module.css";
 
-export const Input: React.FC<InputProps> = ({
+export function Input({
   value,
   onChange,
   placeholder = "",
   onKeyPress,
   className = "",
-}) => {
+}: InputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
@@ -28,4 +28,4 @@ export const Input: React.FC<InputProps> = ({
       className={[styles.input, className].filter(Boolean).join(" ")}
     />
   );
-};
+}

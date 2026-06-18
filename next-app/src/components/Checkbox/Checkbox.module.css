@@ -1,0 +1,26 @@
+.checkbox {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid #9ca3af;
+  border-radius: 0.25rem;
+  background: #fff;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.checkbox:checked {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.checkbox:checked::after {
+  content: "";
+  width: 0.3rem;
+  height: 0.5rem;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translateY(-1px);
+}

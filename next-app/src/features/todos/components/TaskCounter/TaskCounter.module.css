@@ -1,0 +1,19 @@
+.taskCounter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: #f8fafc;
+  border-radius: 1rem;
+}
+
+.count {
+  font-size: 0.95rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+.clearButton {
+  white-space: nowrap;
+}

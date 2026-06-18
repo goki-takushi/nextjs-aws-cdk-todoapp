@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 export default function Home({
   searchParams,
 }: {
-  searchParams?: { filter?: string };
+  searchParams?: Promise<{ filter?: string } | undefined>;
 }) {
   return (
     <main className={styles.main}>

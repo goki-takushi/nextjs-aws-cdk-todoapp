@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "@/components/Button/Button";
+import { clearCompleted } from "../../actions";
 import styles from "./TaskCounter.module.css";
 
 type TaskCounterProps = {
@@ -6,8 +9,8 @@ type TaskCounterProps = {
 };
 
 export function TaskCounter({ activeCount }: TaskCounterProps) {
-  const onClearCompleted = () => {
-    console.log("完了したタスクを削除");
+  const onClearCompleted = async () => {
+    await clearCompleted();
   };
 
   return (

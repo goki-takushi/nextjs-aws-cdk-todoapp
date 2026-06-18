@@ -10,6 +10,7 @@ import { useState } from "react";
 import { addTask } from "../../actions"; // Server Actionをインポート
 import { Button } from "@/components/Button/Button";
 import { Input } from "@/components/Input/Input";
+import styles from "./TaskForm.module.css";
 
 export function TaskForm() {
   const [taskText, setTaskText] = useState("");
@@ -22,14 +23,16 @@ export function TaskForm() {
   };
 
   return (
-    <div>
-      <Input
-        value={taskText}
-        onChange={setTaskText}
-        onKeyPress={(key) => {
-          if (key === "Enter") handleSubmit();
-        }}
-      />
+    <div className={styles.taskForm}>
+      <div className={styles.inputWrapper}>
+        <Input
+          value={taskText}
+          onChange={setTaskText}
+          onKeyPress={(key) => {
+            if (key === "Enter") handleSubmit();
+          }}
+        />
+      </div>
       <Button onClick={handleSubmit}>追加</Button>
     </div>
   );

@@ -15,13 +15,13 @@ import type { FilterType } from "../types";
 import styles from "./TodoApp.module.css";
 
 interface TodoAppProps {
-  searchParams?: { filter?: string };
+  searchParams?: Promise<{ filter?: string } | undefined>;
 }
 
 export async function TodoApp({ searchParams }: TodoAppProps) {
-  const filter = (searchParams?.filter || "all") as FilterType;
+  const resolvedSearchParams = await searchParams;
+  const filter = (resolvedSearchParams?.filter || "all") as FilterType;
 
-  // サーバー側でデータフェッチ
   const allTasks = await getTasks();
   const filteredTasks = allTasks.filter((task) => {
     if (filter === "active") {
