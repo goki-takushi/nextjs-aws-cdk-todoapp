@@ -17,7 +17,9 @@ export function TaskForm() {
 
   const handleSubmit = async () => {
     if (taskText.trim()) {
-      await addTask(taskText.trim()); // Server Action呼び出し
+      // TODO: ユーザーIDをどこかから取得する必要があります。認証機能がある場合は、そこからユーザーIDを取得してください。
+      const userId = "example-user-id"; // ここは実際のユーザーIDに置き換えてください
+      await addTask(userId, taskText.trim()); // Server Action呼び出し
       setTaskText("");
     }
   };

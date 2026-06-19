@@ -6,15 +6,15 @@ import { prisma } from "@/lib/db";
 // タスク一覧取得
 export async function getTasks() {
   const tasks = await prisma.task.findMany({
-    orderBy: { createdAt: "asc" }, // 作成日時の昇順
+    orderBy: { created_at: "asc" }, // 作成日時の昇順
   });
   return tasks;
 }
 
 // タスク追加
-export async function addTask(text: string) {
+export async function addTask(userId: string, text: string) {
   await prisma.task.create({
-    data: { text },
+    data: { user_id: userId, text },
   });
   revalidatePath("/"); // ホームページのキャッシュを再検証
 }

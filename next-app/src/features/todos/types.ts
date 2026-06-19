@@ -5,7 +5,7 @@ export interface Task {
   id: number; // 一意のID（タイムスタンプ）
   text: string; // タスクの内容
   completed: boolean; // 完了状態
-  createdAt: Date; // 作成日時
+  created_at: Date; // 作成日時
 }
 
 // フィルタタイプ（すべて/未完了/完了済み）
