@@ -2,6 +2,7 @@ import type { ButtonProps } from "../../types";
 import styles from "./Button.module.css";
 
 export function Button({
+  type = "button",
   children,
   onClick,
   variant = "primary",
@@ -14,7 +15,7 @@ export function Button({
 
   return (
     <button
-      type="button"
+      type={type}
       className={buttonClass}
       onClick={onClick}
       disabled={disabled}

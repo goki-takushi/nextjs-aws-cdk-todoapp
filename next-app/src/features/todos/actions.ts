@@ -1,43 +1,67 @@
-"use server"; // ← この宣言ですべての関数がServer Actionになる
+"use server";
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 
-// タスク一覧取得
+async function ensureUser(userId: string) {
+  await prisma.user.upsert({
+    where: { id: userId },
+    update: {},
+    create: {
+      id: userId,
+      email: `${userId}@example.com`,
+      password: "demo-password",
+    },
+  });
+}
+
 export async function getTasks() {
   const tasks = await prisma.task.findMany({
-    orderBy: { created_at: "asc" }, // 作成日時の昇順
+    orderBy: { created_at: "asc" },
   });
+
   return tasks;
 }
 
-// タスク追加
 export async function addTask(userId: string, text: string) {
+  const trimmedText = text.trim();
+
+  if (!trimmedText) {
+    return;
+  }
+
+  await ensureUser(userId);
+
   await prisma.task.create({
-    data: { user_id: userId, text },
+    data: {
+      user_id: userId,
+      text: trimmedText,
+    },
   });
-  revalidatePath("/"); // ホームページのキャッシュを再検証
+
+  revalidatePath("/");
 }
 
-// タスクの完了/未完了を切り替え
 export async function toggleTask(id: number) {
   const task = await prisma.task.findUnique({ where: { id } });
-  if (task) {
-    await prisma.task.update({
-      where: { id },
-      data: { completed: !task.completed },
-    });
-    revalidatePath("/");
+
+  if (!task) {
+    return;
   }
+
+  await prisma.task.update({
+    where: { id },
+    data: { completed: !task.completed },
+  });
+
+  revalidatePath("/");
 }
 
-// タスク削除
 export async function deleteTask(id: number) {
   await prisma.task.delete({ where: { id } });
   revalidatePath("/");
 }
 
-// 完了済みタスクを一括削除
 export async function clearCompleted() {
   await prisma.task.deleteMany({
     where: { completed: true },
@@ -45,10 +69,8 @@ export async function clearCompleted() {
   revalidatePath("/");
 }
 
-// 未完了タスク数を取得
 export async function getActiveTaskCount(): Promise<number> {
-  const count = await prisma.task.count({
+  return prisma.task.count({
     where: { completed: false },
   });
-  return count;
 }

@@ -1,29 +1,18 @@
 "use client";
 
-import { toggleTask, deleteTask } from "../../actions";
 import { Checkbox } from "@/components/Checkbox/Checkbox";
 import { Button } from "@/components/Button/Button";
-import type { Task } from "../../types";
+import type { TaskItemProps } from "../../types";
 import styles from "./TaskItem.module.css";
 
-interface TaskItemProps {
-  task: Task;
-}
-
-export function TaskItem({ task }: TaskItemProps) {
+export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
     <li className={styles.taskItem}>
       <label className={styles.taskLabel}>
-        <Checkbox
-          checked={task.completed}
-          onChange={() => toggleTask(task.id)} // ← Server Action呼び出し
-        />
+        <Checkbox checked={task.completed} onChange={() => onToggle(task.id)} />
         <span className={styles.taskText}>{task.text}</span>
       </label>
-      <Button
-        onClick={() => deleteTask(task.id)} // ← Server Action呼び出し
-        variant="danger"
-      >
+      <Button onClick={() => onDelete(task.id)} variant="danger">
         削除
       </Button>
     </li>

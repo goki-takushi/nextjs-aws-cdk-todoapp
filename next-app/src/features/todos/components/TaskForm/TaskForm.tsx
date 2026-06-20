@@ -1,4 +1,4 @@
-"use client"; // ← useStateを使うためClient Component
+"use client";
 
 // Client Component化が必要な場合
 // useState、useEffect等のReact Hooksを使用
@@ -6,36 +6,40 @@
 // useRouter、useSearchParams等のNext.js Client Hooksを使用
 // ブラウザAPI（localStorage、window等）にアクセス
 
-import { useState } from "react";
-import { addTask } from "../../actions"; // Server Actionをインポート
+import { useActionState } from "react";
+import { addTask } from "../../actions";
 import { Button } from "@/components/Button/Button";
 import { Input } from "@/components/Input/Input";
 import styles from "./TaskForm.module.css";
 
 export function TaskForm() {
-  const [taskText, setTaskText] = useState("");
+  const [state, formAction, isPending] = useActionState(
+    async (prevState: any, formData: FormData) => {
+      const text = formData.get("taskText") as string;
+      if (!text || !text.trim()) {
+        return null;
+      }
 
-  const handleSubmit = async () => {
-    if (taskText.trim()) {
-      // TODO: ユーザーIDをどこかから取得する必要があります。認証機能がある場合は、そこからユーザーIDを取得してください。
-      const userId = "example-user-id"; // ここは実際のユーザーIDに置き換えてください
-      await addTask(userId, taskText.trim()); // Server Action呼び出し
-      setTaskText("");
-    }
-  };
+      // TODO: 認証機能がある場合はそこから取得
+      const userId = "example-user-id";
+      await addTask(userId, text.trim());
+      return null;
+    },
+    null,
+  );
 
   return (
-    <div className={styles.taskForm}>
+    <form action={formAction} className={styles.taskForm}>
       <div className={styles.inputWrapper}>
         <Input
-          value={taskText}
-          onChange={setTaskText}
-          onKeyPress={(key) => {
-            if (key === "Enter") handleSubmit();
-          }}
+          name="taskText"
+          disabled={isPending}
+          placeholder="新しいタスクを入力"
         />
       </div>
-      <Button onClick={handleSubmit}>追加</Button>
-    </div>
+      <Button type="submit" disabled={isPending}>
+        {isPending ? "追加中..." : "追加"}
+      </Button>
+    </form>
   );
 }

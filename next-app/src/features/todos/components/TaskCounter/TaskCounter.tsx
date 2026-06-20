@@ -1,18 +1,13 @@
 "use client";
 
 import { Button } from "@/components/Button/Button";
-import { clearCompleted } from "../../actions";
+import { TaskCounterProps } from "../../types";
 import styles from "./TaskCounter.module.css";
 
-type TaskCounterProps = {
-  activeCount: number;
-};
-
-export function TaskCounter({ activeCount }: TaskCounterProps) {
-  const onClearCompleted = async () => {
-    await clearCompleted();
-  };
-
+export function TaskCounter({
+  activeCount,
+  onClearCompleted,
+}: TaskCounterProps) {
   return (
     <div className={styles.taskCounter}>
       <span className={styles.count}>{activeCount} 個のタスク</span>

@@ -6,17 +6,19 @@
 // 初期ロードが高速（HTMLとして事前レンダリング）
 // SEOに有利
 
-import { getTasks, getActiveTaskCount } from "../actions";
+import {
+  clearCompleted,
+  deleteTask,
+  getTasks,
+  getActiveTaskCount,
+  toggleTask,
+} from "../actions";
 import { TaskForm } from "../components/TaskForm/TaskForm";
 import { FilterButtons } from "../components/FilterButtons/FilterButtons";
 import { TaskItem } from "../components/TaskItem/TaskItem";
 import { TaskCounter } from "../components/TaskCounter/TaskCounter";
-import type { FilterType } from "../types";
+import type { FilterType, TodoAppProps } from "../types";
 import styles from "./TodoApp.module.css";
-
-interface TodoAppProps {
-  searchParams?: Promise<{ filter?: string } | undefined>;
-}
 
 export async function TodoApp({ searchParams }: TodoAppProps) {
   const resolvedSearchParams = await searchParams;
@@ -44,10 +46,20 @@ export async function TodoApp({ searchParams }: TodoAppProps) {
         {filteredTasks.length === 0 ? (
           <li className={styles.emptyMessage}>タスクがありません</li>
         ) : (
-          filteredTasks.map((task) => <TaskItem key={task.id} task={task} />)
+          filteredTasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              onToggle={toggleTask}
+              onDelete={deleteTask}
+            />
+          ))
         )}
       </ul>
-      <TaskCounter activeCount={activeCount} />
+      <TaskCounter
+        activeCount={activeCount}
+        onClearCompleted={clearCompleted}
+      />
     </div>
   );
 }

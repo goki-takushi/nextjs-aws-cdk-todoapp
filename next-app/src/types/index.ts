@@ -6,13 +6,16 @@ export interface ButtonProps {
   variant?: "primary" | "secondary" | "danger";
   className?: string;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 export interface InputProps {
-  value: string;
-  onChange: (value: string) => void;
+  name?: string;
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   onKeyPress?: (key: string) => void;
+  disabled?: boolean;
   className?: string;
 }
 

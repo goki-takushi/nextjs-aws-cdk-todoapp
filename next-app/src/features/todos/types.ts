@@ -1,17 +1,18 @@
-// TODO機能固有の型定義
+export const FILTERS = [
+  { key: "all", label: "すべて" },
+  { key: "active", label: "未完了" },
+  { key: "completed", label: "完了済み" },
+] as const;
 
-// タスクの型定義
+export type FilterType = (typeof FILTERS)[number]["key"];
+
 export interface Task {
-  id: number; // 一意のID（タイムスタンプ）
-  text: string; // タスクの内容
-  completed: boolean; // 完了状態
-  created_at: Date; // 作成日時
+  id: number;
+  text: string;
+  completed: boolean;
+  created_at: Date;
 }
 
-// フィルタタイプ（すべて/未完了/完了済み）
-export type FilterType = "all" | "active" | "completed";
-
-// 各コンポーネントのProps型定義
 export interface TaskFormProps {
   onAddTask: (text: string) => void;
 }
@@ -22,12 +23,11 @@ export interface TaskItemProps {
   onDelete: (id: number) => void;
 }
 
-export interface FilterButtonsProps {
-  currentFilter: FilterType;
-  onFilterChange: (filter: FilterType) => void;
-}
-
 export interface TaskCounterProps {
   activeCount: number;
   onClearCompleted: () => void;
+}
+
+export interface TodoAppProps {
+  searchParams?: Promise<{ filter?: string } | undefined>;
 }
