@@ -3,12 +3,14 @@ import styles from "./Input.module.css";
 
 export function Input({
   name,
+  type,
   value,
   onChange,
   placeholder = "",
   onKeyPress,
   className = "",
   disabled = false,
+  required = false,
 }: InputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.value);
@@ -22,14 +24,15 @@ export function Input({
 
   return (
     <input
-      type="text"
       name={name}
+      type={type}
       value={value}
       onChange={handleChange}
       onKeyDown={handleKeyPress}
       placeholder={placeholder}
       className={[styles.input, className].filter(Boolean).join(" ")}
       disabled={disabled}
+      required={required}
     />
   );
 }

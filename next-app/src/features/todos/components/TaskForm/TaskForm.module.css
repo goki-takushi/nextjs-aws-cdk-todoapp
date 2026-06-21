@@ -7,3 +7,9 @@
 .inputWrapper {
   flex: 1;
 }
+
+.errorMessage {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}

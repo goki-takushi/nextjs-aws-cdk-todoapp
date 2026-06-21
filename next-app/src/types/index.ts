@@ -11,11 +11,13 @@ export interface ButtonProps {
 
 export interface InputProps {
   name?: string;
+  type?: string;
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
   onKeyPress?: (key: string) => void;
   disabled?: boolean;
+  required?: boolean;
   className?: string;
 }
 

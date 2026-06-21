@@ -1,14 +1,11 @@
 import { TodoApp } from "@/features/todos/TodoApp/TodoApp";
+import type { TodoAppProps } from "@/features/todos/types";
 import styles from "./page.module.css";
 
-export default function Home({
-  searchParams,
-}: {
-  searchParams?: Promise<{ filter?: string } | undefined>;
-}) {
+export default function Home({ searchParams }: TodoAppProps) {
   return (
-    <main className={styles.main}>
+    <div className={styles.home}>
       <TodoApp searchParams={searchParams} />
-    </main>
+    </div>
   );
 }

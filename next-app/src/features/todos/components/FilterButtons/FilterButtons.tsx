@@ -1,10 +1,5 @@
 "use client";
 
-// URL-Based State Managementのメリット
-// 共有可能: URLをコピーするだけで同じ状態を共有できる
-// ブラウザ履歴: 戻る/進むボタンで状態が復元される
-// サーバー側フィルタリング: 初期ロード時から正しいフィルタが適用される
-
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/Button/Button";
 import { FILTERS, type FilterType } from "../../types";

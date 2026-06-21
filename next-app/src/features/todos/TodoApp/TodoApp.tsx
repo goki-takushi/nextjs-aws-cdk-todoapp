@@ -1,11 +1,3 @@
-// 'use client'なし = Server Component
-
-// Server Componentの利点
-// データベースに直接アクセス可能
-// シークレット情報をクライアントに送信しない
-// 初期ロードが高速（HTMLとして事前レンダリング）
-// SEOに有利
-
 import {
   clearCompleted,
   deleteTask,
@@ -17,6 +9,7 @@ import { TaskForm } from "../components/TaskForm/TaskForm";
 import { FilterButtons } from "../components/FilterButtons/FilterButtons";
 import { TaskItem } from "../components/TaskItem/TaskItem";
 import { TaskCounter } from "../components/TaskCounter/TaskCounter";
+import { LogoutButton } from "@/features/auth/components/LogoutButton/LogoutButton"; // 💡インポート
 import type { FilterType, TodoAppProps } from "../types";
 import styles from "./TodoApp.module.css";
 
@@ -28,8 +21,7 @@ export async function TodoApp({ searchParams }: TodoAppProps) {
   const filteredTasks = allTasks.filter((task) => {
     if (filter === "active") {
       return !task.completed;
-    }
-    if (filter === "completed") {
+    } else if (filter === "completed") {
       return task.completed;
     }
     return true;
@@ -39,7 +31,11 @@ export async function TodoApp({ searchParams }: TodoAppProps) {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>To-Doリスト</h1>
+      <div className={styles.header}>
+        <h1 className={styles.title}>To-Doリスト</h1>
+        <LogoutButton />
+      </div>
+
       <TaskForm />
       <FilterButtons />
       <ul className={styles.taskList}>
